@@ -6,46 +6,76 @@
     <body>
         <p id="values"></p>
         <p id="division"></p>
-        <label for="input-bar">Enter a decimal number: </label>
-        <input type="input" id="input-bar" name="input-bar">
-        <button type="submit" id="submit-btn" name="submit-btn">Submit</button>
+        <p id="binary"></p>
+        <label for="dec-bar">Enter a decimal number: </label>
+        <input type="input" id="dec-bar" name="dec-bar">
+        <button type="submit" id="dec-btn" name="dec-btn">Submit</button>
+
+        <label for="bin-bar">Enter a binary number: </label>
+        <input type="input" id="bin-bar" name="bin-bar">
+        <button type="submit" id="bin-btn" name="bin-btn">Submit</button>
         <script>
-                let inputBar = document.getElementById('input-bar');
-                let values = document.getElementById('values');
-                let divis = document.getElementById('division');
-                let submitBtn = document.getElementById('submit-btn');
-                let decNum = Number(inputBar.value);
-                let decRem = Number((decNum % 2));
-                let decArr = [];
-                let copyArr = [];
+            let decBar = document.getElementById('dec-bar');
+            let decBtn = document.getElementById('dec-btn');
+
+            let binBar = document.getElementById('bin-bar');
+            let binBtn = document.getElementById('bin-btn');
+
+            let values = document.getElementById('values');
+            let divis = document.getElementById('division');
+            let bin = document.getElementById('binary');
+
+            let decNum = Number(decBar.value);
+            let decRem = Number((decNum % 2));
+
+            let decArr = [];
+            let binArr = [];
+            let copyArr = [];
+
+            let total = 0;
     
-                submitBtn.addEventListener('click', update);
-                //inputBar.addEventListener('input', update);
+            decBtn.addEventListener('click', updateDec);
+            binBtn.addEventListener('click', updateBin);
 
-                function update(e) {
-                    //decArr.push(decNum);
-                    decNum = inputBar.value;
-                    decArr = [];
-                    decArr.push(decNum % 2);
-                    for (let i = 0; i < (inputBar.value / 2); i++) { 
-                        decNum /= 2;
-                        if ((decNum / 2) > 0.5) {
-                            //decArr.push("Number:")
-                            //decArr.push(Math.floor(decNum));
-                            //decArr.push("Remainder:");
-                            decArr.push(Math.floor(decNum % 2));
-                        }
-                    }   
+            function updateDec(e) {
+                decNum = decBar.value;
+                decArr = [];
 
-                    if (inputBar.value == 2 || inputBar.value == 4 || inputBar.value == 8) {
-                        decArr.push(1);
+                decArr.push(decNum % 2);
+                for (let i = 0; i < (decBar.value / 2); i++) { 
+                    decNum /= 2;
+                    if ((decNum / 2) > 0.5) {
+                        decArr.push(Math.floor(decNum % 2));
                     }
+                    if (decArr.length > 8) {
+                        decArr.splice(8, 0, " ");
+                    }
+                }   
 
-                    copyArr = decArr.slice().reverse();
-                    resArr = copyArr.join("");
-                    values.innerHTML = e.target.value;
-                    divis.innerHTML = resArr;
+                if (decBar.value == 2 || decBar.value == 4 || decBar.value == 8) {
+                    decArr.push(1);
                 }
+
+                copyArr = decArr.slice().reverse();
+                resArr = copyArr.join("");
+                values.innerHTML = e.target.value;
+                divis.innerHTML = resArr;
+            }
+
+            function updateBin(e) {
+                binNum = binBar.value;
+                binArr = [];
+
+                for (let i = 0; i < binNum.length; i++) {
+                    binArr.push(Number(binNum[i]));
+                    //binArr[i] *= 2;
+                    total *= 2;
+                    total += binArr[i];
+                }
+
+                bin.innerHTML = total;
+                total = 0;
+            }
         </script>
     </body>
 </html>
